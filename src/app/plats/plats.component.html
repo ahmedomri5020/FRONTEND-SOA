@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Date Création</th>
+                        <th>Pays</th>
+                        <th>Image</th>
+                        <th *ngIf="AuthService.isAdmin()">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let plat of plats">
+                        <td>{{ plat.idPlat }}</td>
+                        <td>{{ plat.nomPlat }}</td>
+                        <td>{{ plat.prixPlat }}</td>
+                        <td>{{plat.dateCreation | date:'dd/MM/yyyy'}}</td>
+                        <td>{{ plat.pays.nomPays }}</td>
+                        <td><img class="card-img-top img-responsive"  
+                            src = "{{plat.imageStr}}"  
+                            style = "height :50px;width:100px"></td>
+
+                        <td><a *ngIf="AuthService.isAdmin()"
+                        class="btn btn-danger" (click)="supprimerPlat(plat)">Supprimer</a></td>
+
+                        <td><a *ngIf="AuthService.isAdmin()" class="btn btn-success" [routerLink]="['/updatePlat',plat.idPlat]">Modifier</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+      <app-update-pays (paysUpdated)="paysUpdated($event)" [pays]="updatedPays" [ajout]="ajout"></app-update-pays>
+    </div>
+  
+    <div class="card shadow mb-4">
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nom Pays</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of pays">
+              <td>{{ p.idPays }}</td>
+              <td>{{ p.nomPays }}</td>
+              <td>{{ p.descriptionPays }}</td>
+              <td><a class="btn btn-success" (click)="updatePays(p)">Editer</a></td>
+              <td><a class="btn btn-danger" (click)="supprimerPays(p)">Supprimer</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

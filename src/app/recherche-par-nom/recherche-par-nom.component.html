@@ -1,0 +1,33 @@
+<div class="container">
+    <form class="form-inline">
+        <div class="form-group mx-sm-3 mb-2 mt-2">
+            <label>Nom Plat en tapant</label>
+            <input [(ngModel)]="searchTerm" name="searchTerm" class="form-control" (keyup)="onKeyUp(searchTerm)">
+        </div>
+    </form>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Date Création</th>
+                        <th>Pays</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of plats">
+                        <td>{{p.idPlat}}</td>
+                        <td>{{p.nomPlat}}</td>
+                        <td>{{p.prixPlat}}</td>
+                        <td>{{p.dateCreation}}</td>
+                        <td>{{p.pays.nomPays}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="container">
+    <div>
+        <h2>Modifier un Plat :</h2>
+    </div>
+    <form (ngSubmit)="updatePlat()"> 
+        <div hidden class="col-sm-2 col-md-2 col-lg-2">
+            <label>ID Plat</label>
+            <input type="text" [(ngModel)]="currentPlat.idPlat" name="idPlat" class="form-control">
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label>Nom Plat</label>
+            <input type="text" [(ngModel)]="currentPlat.nomPlat" name="nomPlat" class="form-control">
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <label>Prix Plat</label>
+            <input type="number" [(ngModel)]="currentPlat.prixPlat" name="prixPlat" class="form-control">
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label>Date création</label>
+            <input type="date" [ngModel]="currentPlat.dateCreation | date: 'yyyy-MM-dd'" 
+            (ngModelChange)="currentPlat.dateCreation = $event" name="dateCreation" class="form-control">
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label>Pays</label>
+            <select class="form-control form-control-lg" id="idPays" name="idPays" [(ngModel)]="updatedPaysId">
+                <option *ngFor="let pay of pays" [value]="pay.idPays">
+                    {{ pay.nomPays }}
+                </option>  
+            </select>
+        </div> 
+        
+        <div class="col-sm-16 col-md-16 col-lg-16"> 
+            <img [src]="myImage" class="card-img-top img-fluid rounded-start" 
+            style="width: 500px; height: 300px" /> 
+            </div> 
+            
+            <div class="col-sm-16 col-md-16 col-lg-16"> 
+                <label class="mb-2">Image :</label> 
+                <input type="file" (change)="onImageUpload($event)"  class="form-control"> 
+            </div>  
+            
+             
+            
+            
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-success">Modifier</button> <!-- Removed click event -->
+        </div>
+    </form>
+</div>

@@ -1,0 +1,24 @@
+<form>
+    <div [hidden]="ajout" >
+        <label>ID Pays</label>
+        <input type="text" [(ngModel)]="pays.idPays" name="idPays" class="form-control w-25">
+    </div>
+    <div>
+        <label>Nom Pays</label>
+        <input type="text" [(ngModel)]="pays.nomPays" name="nomPays" class="form-control" placeholder="Entrez un nom de pays...">
+    </div>
+    
+    <div>
+        <label>Description de Pays</label>
+        <input type="text" [(ngModel)]="pays.descriptionPays" name="descriptionPays" class="form-control" placeholder="Entrez un description de pays...">
+    </div>
+
+    <div class="mt-2">
+        <button type="submit" [disabled]="!pays.nomPays" class="btn btn-success"
+            (click)="savePays()" >{{ajout ? 'Ajouter' : 'Modifier'}}
+        </button>
+    </div>
+</form>
+
+
+    

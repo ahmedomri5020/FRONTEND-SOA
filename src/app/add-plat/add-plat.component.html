@@ -1,0 +1,41 @@
+<div class="container">
+    <div>
+        <h2>Ajouter un Plat :</h2>
+    </div>
+    <form (ngSubmit)="addPlat()">
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label>Nom Plat</label>
+            <input type="text" [(ngModel)]="newPlat.nomPlat" name="nomPlat" class="form-control" required>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <label>Prix Plat</label>
+            <input type="number" [(ngModel)]="newPlat.prixPlat" name="prixPlat" class="form-control" required>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label>Date création</label>
+            <input type="date" [(ngModel)]="newPlat.dateCreation" name="dateCreation" class="form-control" required>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label>Pays</label>
+            <select class="form-control" [(ngModel)]="newIdPays" name="idPays" required>
+                <option *ngFor="let pay of pays" [value]="pay.idPays">
+                    {{ pay.nomPays }}
+                </option>
+            </select>
+        </div>
+        <div class="col-sm-16 col-md-16 col-lg-16">
+            <label class="mb-2">Image :</label>
+            <input type="file" (change)="onImageUpload($event)"
+                name="logo" class="form-control">
+        </div>
+
+        <div class="col-sm-16 col-md-16 col-lg-16">
+            <img [src]="imagePath" class="card-img-top img-fluid rounded-start"
+                style="width: 500px; height: 300px" *ngIf="imagePath" />
+        </div>
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-success">Ajouter</button>
+        </div>
+    </form>
+</div>
