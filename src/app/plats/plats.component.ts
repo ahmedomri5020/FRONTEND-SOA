@@ -27,14 +27,12 @@ export class PlatsComponent implements OnInit {
     this.chargerPlats();
   }
   chargerPlats(){
-    this.platService.listePlats().subscribe(plats => {
-      this.plats = plats;
+    this.platService.listePlats().subscribe(prods => {
+      this.plats = prods;
       this.plats.forEach((p) => { 
         this.platService 
-        .loadImage(p.image.idImage) 
-        .subscribe((img: Image) => { 
-          p.imageStr = 'data:' + img.type + ';base64,' + img.image; 
-        }); 
+        p.imageStr = 'data:' + p.images[0].type + ';base64,' + 
+        p.images[0].image; 
       });  
     });
   }

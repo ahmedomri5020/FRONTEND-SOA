@@ -1,6 +1,6 @@
 import { Pays } from './../model/pays.model';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Plat } from '../model/plat.model';
 import { PlatService } from '../services/plat.service';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +11,7 @@ import { Image } from '../model/image.model';
 @Component({
     selector: 'app-update-plat',
     standalone: true,
-    imports: [FormsModule, CommonModule], 
+    imports: [FormsModule, CommonModule,RouterModule], 
     templateUrl: './update-plat.component.html',
 })
 export class UpdatePlatComponent implements OnInit {
@@ -28,51 +28,48 @@ export class UpdatePlatComponent implements OnInit {
               private platService: PlatService) { }
 
   ngOnInit(): void {
-      this.platService.listePays().
-      subscribe(p => {this.pays = p._embedded.pays; 
-        console.log(p); 
-        }); 
-        this.platService.consulterPlat(this.activatedRoute.snapshot.params['id']). 
-        subscribe( p =>{ this.currentPlat = p; 
-        this.updatedPaysId =   
-        p.pays.idPays; 
-        this.platService 
-        .loadImage(this.currentPlat.image.idImage) 
-        .subscribe((img: Image) => { 
-        this.myImage = 'data:' + img.type + ';base64,' + img.image; 
-        });     
-        } ) ;
+    this.platService.listePays(). 
+    subscribe(cats => {this.pays = cats._embedded.pays; 
+    }); 
+ 
+   this.platService.consulterPlat(this.activatedRoute.snapshot.params['id'])
+ .subscribe( prod =>{ this.currentPlat = prod; 
+        this.updatedPaysId =   prod.pays.idPays; 
+    } ) ; 
 
   }
 
   updatePlat() {
-    this.currentPlat.pays = this.pays.find(p => p.idPays == 
-      this.updatedPaysId)!; 
-          //tester si l'image du produit a été modifiée 
-          if (this.isImageUpdated) 
-          {     
-            this.platService 
-            .uploadImage(this.uploadedImage, this.uploadedImage.name) 
-            .subscribe((img: Image) => { 
-              this.currentPlat.image = img; 
-            
-                     this.platService 
-                       .updatePlat(this.currentPlat) 
-                       .subscribe((prod) => { 
-                          this.router.navigate(['plats']); 
-                                    }); 
-              }); 
-            } 
-            else{           
+    this.currentPlat.pays = this.pays.find(cat => cat.idPays == 
+      this.updatedPaysId)!;         
                 this.platService 
                   .updatePlat(this.currentPlat) 
                   .subscribe((prod) => { 
                     this.router.navigate(['plats']); 
                   }); 
-            }
+}
+            onAddImagePlat() { 
+              this.platService 
+              .uploadImagePlat(this.uploadedImage, 
+            this.uploadedImage.name,this.currentPlat.idPlat) 
+              .subscribe( (img : Image)  => { 
+                      this.currentPlat.images.push(img); 
+                      }); 
+             } 
+             supprimerImage(img: Image){ 
+              let conf = confirm("Etes-vous sûr ?"); 
+              if (conf) 
+                 this.platService.supprimerImage(img.idImage).subscribe(() => { 
+                    //supprimer image du tableau currentProduit.images     
+                    const index = this.currentPlat.images.indexOf(img, 0); 
+                    if (index > -1) { 
+                      this.currentPlat.images.splice(index, 1); 
+                    } 
+               }); 
+             }
     
   
-  }
+  
   onImageUpload(event: any) { 
     if(event.target.files && event.target.files.length) { 
       this.uploadedImage = event.target.files[0]; 

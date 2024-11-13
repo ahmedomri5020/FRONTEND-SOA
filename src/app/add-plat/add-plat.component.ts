@@ -29,21 +29,21 @@ export class AddPlatComponent implements OnInit {
     });
   }
 
-  addPlat(){ 
-    this.platService 
-    .uploadImage(this.uploadedImage, this.uploadedImage.name) 
-    .subscribe((img: Image) => { 
-         this.newPlat.image=img; 
-         this.newPlat.pays = this.pays.find(p => p.idPays 
-== this.newIdPays)!; 
-      
-          this.platService 
-            .ajouterPlat(this.newPlat) 
-            .subscribe(() => { 
-              this.router.navigate(['plats']); 
-            }); 
-    }); 
-    } 
+  addPlat() {
+    this.newPlat.pays = this.pays.find(p => p.idPays == this.newIdPays)!;
+    
+    this.platService.ajouterPlat(this.newPlat).subscribe((createdPlat: Plat & { idPlat: number }) => {
+      if (this.uploadedImage) {
+        this.platService
+          .uploadImagePlat(this.uploadedImage, this.uploadedImage.name, createdPlat.idPlat)
+          .subscribe(() => {
+            this.router.navigate(['plats']);
+          });
+      } else {
+        this.router.navigate(['plats']);
+      }
+    });
+}
   
 
 
